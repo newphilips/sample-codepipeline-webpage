@@ -1,19 +1,15 @@
-version: 0.2
+version: 0.0
+os: linux
 
-phases:
-    pre_build: 
-	commands:
-	- echo "pre_build phase running"
-    build: 
-	commands:
-	- echo "build phase running"
-    install
-	commands:
-	- echo "install phase running"
-    post_build: 
-	commands:
-	- echo "post_build phase running"
+files:
+    - source: index.html
+      destination: /var/www/html/
 
-artifacts:
-    files:
-	- '**/*'
+hooks:
+    BeforeInstall:
+	- location: scripts/install_dependencies
+	  timeout: 300
+	  runas: root
+	- location: scripts/start_server
+	  timeout: 300
+	  runas: root
